@@ -14,9 +14,9 @@ ar x $DEB data.tar.gz && mv data.tar.gz ${DEB%.*}.tar.gz
 # osx
 7z x $PKG -oosx
 cat osx/pandoc.pkg/Payload | gunzip -dc |cpio -i
-zip -r ${PKG%.*}.zip osx/pandoc.pkg/usr/
+zip -r ${PKG%.*}.zip usr/
 
 # Windows
-7z x $MSI -owindows
-zip -r ${MSI%.*}.zip windows
+7z x $MSI -o${MSI%.*}
+zip -r ${MSI%.*}.zip ${MSI%.*}
 # 7z x $MSI -owindows && cd windows && 7z a ../${MSI%.*}.zip && cd ..
