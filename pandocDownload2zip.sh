@@ -72,7 +72,7 @@ if [[ ! -z "$msiUrlPartial" ]]; then
   # download
   wget $msiUrl
   # unpack
-  7z x $MSI -o"$msiWoExt"
+  msiextract $MSI && mv "Program Files/Pandoc" $msiWoExt && rm -rf "Program Files"
   # zip
   zip -r $msiZip $msiWoExt
 fi

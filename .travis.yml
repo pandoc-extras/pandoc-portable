@@ -3,6 +3,8 @@ addons:
   apt:
     packages:
     - p7zip-full
+install:
+  - sudo apt-get install msitools
 before_script:
   - echo $TRAVIS_TAG
 script:
