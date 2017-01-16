@@ -23,11 +23,15 @@ fi
 debUrlPartial=$(curl -L $url | grep -o '/jgm/pandoc/releases/download/.*\.deb')
 pkgUrlPartial=$(curl -L $url | grep -o '/jgm/pandoc/releases/download/.*\.pkg')
 msiUrlPartial=$(curl -L $url | grep -o '/jgm/pandoc/releases/download/.*\.msi')
+zipUrlPartial=$(curl -L $url | grep -o '/jgm/pandoc/releases/download/.*\.zip')
+tarUrlPartial=$(curl -L $url | grep -o '/jgm/pandoc/releases/download/.*\.tar\.gz')
 # debug msg
 if [[ $DEBUG == "true" ]]; then
   echo $debUrlPartial
   echo $pkgUrlPartial
   echo $msiUrlPartial
+  echo $zipUrlPartial
+  echo $tarUrlPartial
 fi
 
 # download and extract
@@ -78,4 +82,21 @@ if [[ ! -z "$msiUrlPartial" ]]; then
   msiextract $MSI && mv "Program Files/Pandoc" $msiWoExt && rm -rf "Program Files"
   # zip
   zip -r $msiZip $msiWoExt
+fi
+## Source Code
+### .zip
+if [[ ! -z "$zipUrlPartial" ]]; then
+  # variables
+  zipUrl="https://github.com$zipUrlPartial"
+  ZIP=${zipUrl##*/}
+  # download
+  wget $zipUrl
+fi
+### .tar.gz
+if [[ ! -z "$tarUrlPartial" ]]; then
+  # variables
+  tarUrl="https://github.com$tarUrlPartial"
+  TAR=${tarUrl##*/}
+  # download
+  wget $tarUrl
 fi

@@ -23,6 +23,8 @@ deploy:
     - "$pkgZip"
     - "$MSI"
     - "$msiZip"
+    - "$ZIP"
+    - "$TAR"
   skip_cleanup: true
   on:
     tags: true
