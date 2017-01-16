@@ -34,6 +34,9 @@ if [[ $DEBUG == "true" ]]; then
   echo $tarUrlPartial
 fi
 
+# prepare dist folder
+mkdir -p dist
+
 # download and extract
 ## Linux
 if [[ ! -z "$debUrlPartial" ]]; then
@@ -49,6 +52,10 @@ if [[ ! -z "$debUrlPartial" ]]; then
   tar -zxvf $debWoExt.tar.gz && mv usr $debWoExt
   # zip
   zip -r $debZip $debWoExt
+  # to dist/
+  mv $DEB dist/
+  mv $debZip dist/
+  mv $debWoExt.tar.gz dist/
 fi
 ## macOS
 if [[ ! -z "$pkgUrlPartial" ]]; then
@@ -68,6 +75,9 @@ if [[ ! -z "$pkgUrlPartial" ]]; then
   cat $pkgWoExt-pkg/pandoc.pkg/Payload | gunzip -dc |cpio -i && mv usr $pkgWoExt
   # zip
   zip -r $pkgZip $pkgWoExt
+  # to dist/
+  mv $PKG dist/
+  mv $pkgZip dist/
 fi
 ## Windows
 if [[ ! -z "$msiUrlPartial" ]]; then
@@ -82,6 +92,9 @@ if [[ ! -z "$msiUrlPartial" ]]; then
   msiextract $MSI && mv "Program Files/Pandoc" $msiWoExt && rm -rf "Program Files"
   # zip
   zip -r $msiZip $msiWoExt
+  # to dist/
+  mv $MSI dist/
+  mv $msiZip dist/
 fi
 ## Source Code
 ### .zip
@@ -91,6 +104,8 @@ if [[ ! -z "$zipUrlPartial" ]]; then
   ZIP=${zipUrl##*/}
   # download
   wget $zipUrl
+  # to dist/
+  mv $ZIP dist/
 fi
 ### .tar.gz
 if [[ ! -z "$tarUrlPartial" ]]; then
@@ -99,4 +114,6 @@ if [[ ! -z "$tarUrlPartial" ]]; then
   TAR=${tarUrl##*/}
   # download
   wget $tarUrl
+  # to dist/
+  mv $TAR dist/
 fi

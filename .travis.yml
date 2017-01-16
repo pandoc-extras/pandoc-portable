@@ -13,28 +13,12 @@ script:
 after_success:
   - ls -l
 before_deploy:
-  - echo "$DEB"
-  - echo "$debZip"
-  - echo "$debWoExt.tar.gz"
-  - echo "$PKG"
-  - echo "$pkgZip"
-  - echo "$MSI"
-  - echo "$msiZip"
-  - echo "$ZIP"
-  - echo "$TAR"
+  - export DIST=$(find dist -type f -iname '*')
 deploy:
   provider: releases
   api_key: "$GH_TOKEN"
-  file:
-    - "$DEB"
-    - "$debZip"
-    - "$debWoExt.tar.gz"
-    - "$PKG"
-    - "$pkgZip"
-    - "$MSI"
-    - "$msiZip"
-    - "$ZIP"
-    - "$TAR"
+  file_glob: true
+  file: "${DIST}"
   skip_cleanup: true
   on:
     tags: true
