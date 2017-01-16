@@ -3,10 +3,9 @@
 # usage: VERSION=1.19.1 DEBUG=true source ./pandocDownload2zip.sh # source for running it in the current shell such that the variables can be obtained
 
 # Notes:
-# installing 7z
-## Linux: `sudo apt-get install p7zip-full`
-## macOS: `brew install p7zip`
-# script below does not work on macOS host, pkg unpack
+# installing dependencies
+## Linux: `sudo apt-get install p7zip-full msitools`, msitools requires ubuntu>=16.04
+## macOS: `brew install msitools`
 
 # debug msg
 if [[ $DEBUG == "true" ]]; then
@@ -57,8 +56,12 @@ if [[ ! -z "$pkgUrlPartial" ]]; then
   # download
   wget $pkgUrl
   # unpack
-  7z x $PKG -o"$pkgWoExt"
-  cat $pkgWoExt/pandoc.pkg/Payload | gunzip -dc |cpio -i && mv usr $pkgWoExt
+  if [[ `uname` == "Darwin" ]]; then
+    mkdir $pkgWoExt-pkg && xar -xf $PKG -C $pkgWoExt-pkg
+  else
+    7z x $PKG -o"$pkgWoExt-pkg"
+  fi
+  cat $pkgWoExt-pkg/pandoc.pkg/Payload | gunzip -dc |cpio -i && mv usr $pkgWoExt
   # zip
   zip -r $pkgZip $pkgWoExt
 fi
