@@ -6,7 +6,7 @@ script:
     else
       version=1.19.1
     fi
-  - VERSION=version source ./2zip.sh
+  - VERSION=version source ./pandocDownload2zip.sh
 deploy:
   provider: releases
   api_key: "$GH_TOKEN"
