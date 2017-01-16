@@ -1,12 +1,11 @@
 language: generic
-sudo: required
-dist: trusty
 addons:
   apt:
     packages:
     - p7zip-full
 install:
-  - sudo apt-get install msitools
+  - wget http://launchpadlibrarian.net/228981664/msitools_0.95-1_arm64.deb &&
+    sudo dpkg -i msitools_0.95-1_arm64.deb
 before_script:
   - echo $TRAVIS_TAG
 script:
