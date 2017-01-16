@@ -12,13 +12,11 @@ script:
   - VERSION=$version DEBUG=true source ./pandocDownload2zip.sh
 after_success:
   - ls -l
-before_deploy:
-  - export DIST=$(ls dist/*)
 deploy:
   provider: releases
   api_key: "$GH_TOKEN"
   file_glob: true
-  file: "${DIST}"
+  file: "dist/*"
   skip_cleanup: true
   on:
     tags: true
