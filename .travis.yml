@@ -6,6 +6,8 @@ addons:
     packages:
     - p7zip-full
 install:
+  - wget http://launchpadlibrarian.net/293727143/libc6_2.23-0ubuntu5_amd64.deb &&
+    sudo dpkg -i libc6_2.23-0ubuntu5_amd64.deb
   - wget http://launchpadlibrarian.net/253246088/libgsf-1-common_1.14.36-1_all.deb &&
     sudo dpkg -i libgsf-1-common_1.14.36-1_all.deb
   - wget http://launchpadlibrarian.net/253246092/libgsf-1-114_1.14.36-1_amd64.deb &&
