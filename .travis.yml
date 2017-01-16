@@ -1,25 +1,19 @@
 language: generic
-# before_install:
-#   - |
-#     if [[ $pandocVersion == "latest" ]]; then
-#       url="https://github.com/jgm/pandoc/releases/latest"
-#     else
-#       url="https://github.com/jgm/pandoc/releases/tag/$pandocVersion"
-#     fi
-#     path=$(curl -L $url | grep -o '/jgm/pandoc/releases/download/.*-amd64.deb')
-#     downloadUrl="https://github.com$path"
-#     file=${path##*/}
-# install:
-#   - wget $downloadUrl &&
-#     sudo dpkg -i $file
-#   - pip install -U pip
-#   - pip install -e .[test]
-# command to extract and zip
 script:
+  # obtain version from git tag, if not a git tag, set to 1.19.1 for testing
+  - if [[ ! -z "$TRAVIS_TAG" ]]; then
+      version=$TRAVIS_TAG
+    else
+      version=1.19.1
+    fi
+  - VERSION=version source ./2zip.sh
 deploy:
   provider: releases
   api_key: "$GH_TOKEN"
-  file: # add files here
+  file:
+    - "$debZip"
+    - "$pkgZip"
+    - "$msiZip"
   skip_cleanup: true
   on:
     tags: true
