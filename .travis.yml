@@ -8,7 +8,7 @@ before_script:
 script:
   # obtain version from git tag, if not a git tag, set to 1.19.1 for testing
   - if [[ ! -z "$TRAVIS_TAG" ]]; then version=$TRAVIS_TAG; else version=1.19.1; fi
-  - VERSION=version source ./pandocDownload2zip.sh
+  - VERSION=version DEBUG=true source ./pandocDownload2zip.sh
 deploy:
   provider: releases
   api_key: "$GH_TOKEN"

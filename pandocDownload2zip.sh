@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# usage: VERSION=1.19.1 source ./2zip.sh # source for running it in the current shell such that the variables can be obtained
+# usage: VERSION=1.19.1 DEBUG=true source ./pandocDownload2zip.sh # source for running it in the current shell such that the variables can be obtained
 
 # Notes:
 # installing 7z
@@ -8,13 +8,28 @@
 ## macOS: `brew install p7zip`
 # script below does not work on macOS host, pkg unpack
 
+# debug msg
+if [[ $DEBUG == "true" ]]; then
+  echo $VERSION
+fi
+
 # url to pandoc version
 url="https://github.com/jgm/pandoc/releases/tag/$VERSION"
+# debug msg
+if [[ $DEBUG == "true" ]]; then
+  echo $url
+fi
 
 # get url to pandoc binaries
 debUrlPartial=$(curl -L $url | grep -o '/jgm/pandoc/releases/download/.*\.deb')
 pkgUrlPartial=$(curl -L $url | grep -o '/jgm/pandoc/releases/download/.*\.pkg')
 msiUrlPartial=$(curl -L $url | grep -o '/jgm/pandoc/releases/download/.*\.msi')
+# debug msg
+if [[ $DEBUG == "true" ]]; then
+  echo $debUrlPartial
+  echo $pkgUrlPartial
+  echo $msiUrlPartial
+fi
 
 # download and extract
 ## Linux
