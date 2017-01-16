@@ -3,8 +3,6 @@ addons:
   apt:
     packages:
     - p7zip-full
-install:
-  - sudo apt-get install p7zip-full
 script:
   # obtain version from git tag, if not a git tag, set to 1.19.1 for testing
   - if [[ ! -z "$TRAVIS_TAG" ]]; then version=$TRAVIS_TAG; else version=1.19.1; fi
