@@ -12,6 +12,16 @@ script:
   - VERSION=$version DEBUG=true source ./pandocDownload2zip.sh
 after_success:
   - ls -l
+before_deploy:
+  - echo "$DEB"
+  - echo "$debZip"
+  - echo "$debWoExt.tar.gz"
+  - echo "$PKG"
+  - echo "$pkgZip"
+  - echo "$MSI"
+  - echo "$msiZip"
+  - echo "$ZIP"
+  - echo "$TAR"
 deploy:
   provider: releases
   api_key: "$GH_TOKEN"
