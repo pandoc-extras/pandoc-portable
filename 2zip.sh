@@ -1,22 +1,50 @@
 #!/bin/bash
 
-# install 7z
-sudo apt-get install p7zip-full
+# usage: VERSION=1.19.1 ./2zip.sh
 
-# names
-DEB=pandoc-1.19.1-1-amd64.deb
-PKG=pandoc-1.19.1-osx.pkg
-MSI=pandoc-1.19.1-windows.msi
+# Notes on installing 7z
+# Linux: `sudo apt-get install p7zip-full`
+# macOS: `brew install p7zip`
 
-# Linux
-ar x $DEB data.tar.gz && mv data.tar.gz ${DEB%.*}.tar.gz
+# url to pandoc version
+url="https://github.com/jgm/pandoc/releases/tag/$VERSION"
 
-# osx
-7z x $PKG -oosx
-cat osx/pandoc.pkg/Payload | gunzip -dc |cpio -i
-zip -r ${PKG%.*}.zip usr/
+# get url to pandoc binaries
+debUrlPartial=$(curl -L $url | grep -o '/jgm/pandoc/releases/download/.*\.deb')
+pkgUrlPartial=$(curl -L $url | grep -o '/jgm/pandoc/releases/download/.*\.pkg')
+msiUrlPartial=$(curl -L $url | grep -o '/jgm/pandoc/releases/download/.*\.msi')
 
-# Windows
-7z x $MSI -o${MSI%.*}
-zip -r ${MSI%.*}.zip ${MSI%.*}
-# 7z x $MSI -owindows && cd windows && 7z a ../${MSI%.*}.zip && cd ..
+# download and extract
+## Linux
+if [[ ! -z "$debUrlPartial" ]]; then
+  debUrl="https://github.com$debUrlPartial"
+  DEB=${debUrl##*/}
+  wget $debUrl
+  # unpack
+  ar x $DEB data.tar.gz && mv data.tar.gz ${DEB%.*}.tar.gz
+fi
+## macOS
+if [[ ! -z "$pkgUrlPartial" ]]; then
+  pkgUrl="https://github.com$pkgUrlPartial"
+  PKG=${pkgUrl##*/}
+  wget $pkgUrl
+  # unpack
+  7z x $PKG -oosx
+  cat osx/pandoc.pkg/Payload | gunzip -dc |cpio -i
+  zip -r ${PKG%.*}.zip usr/
+fi
+## Windows
+if [[ ! -z "$msiUrlPartial" ]]; then
+  msiUrl="https://github.com$msiUrlPartial"
+  MSI=${msiUrl##*/}
+  wget $msiUrl
+  # unpack
+  7z x $MSI -o${MSI%.*}
+  zip -r ${MSI%.*}.zip ${MSI%.*}
+fi
+
+# debug
+# echo $msiUrl
+# echo $pkgUrl
+# echo $msiUrl
+
