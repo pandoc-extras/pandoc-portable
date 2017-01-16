@@ -1,0 +1,4 @@
+dist/
+pandoc-*-amd64
+pandoc-*-osx*
+pandoc-*-windows
