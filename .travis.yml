@@ -16,8 +16,12 @@ deploy:
   provider: releases
   api_key: "$GH_TOKEN"
   file:
+    - "$DEB"
     - "$debZip"
+    - "$debWoExt.tar.gz"
+    - "$PKG"
     - "$pkgZip"
+    - "$MSI"
     - "$msiZip"
   skip_cleanup: true
   on:
