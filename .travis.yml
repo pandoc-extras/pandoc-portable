@@ -1,6 +1,8 @@
 language: generic
-sudo: required
-dist: trusty
+addons:
+  apt:
+    packages:
+    - p7zip-full
 install:
   - sudo apt-get install p7zip-full
 script:
