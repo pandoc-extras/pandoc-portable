@@ -2,9 +2,11 @@
 
 # usage: VERSION=1.19.1 source ./2zip.sh # source for running it in the current shell such that the variables can be obtained
 
-# Notes on installing 7z
-# Linux: `sudo apt-get install p7zip-full`
-# macOS: `brew install p7zip`
+# Notes:
+# installing 7z
+## Linux: `sudo apt-get install p7zip-full`
+## macOS: `brew install p7zip`
+# script below does not work on macOS host, pkg unpack
 
 # url to pandoc version
 url="https://github.com/jgm/pandoc/releases/tag/$VERSION"
@@ -59,8 +61,3 @@ if [[ ! -z "$msiUrlPartial" ]]; then
   # zip
   zip -r $msiZip $msiWoExt
 fi
-
-# debug
-# echo $msiUrl
-# echo $pkgUrl
-# echo $msiUrl
