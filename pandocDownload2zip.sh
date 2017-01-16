@@ -23,8 +23,8 @@ fi
 debUrlPartial=$(curl -L $url | grep -o '/jgm/pandoc/releases/download/.*\.deb')
 pkgUrlPartial=$(curl -L $url | grep -o '/jgm/pandoc/releases/download/.*\.pkg')
 msiUrlPartial=$(curl -L $url | grep -o '/jgm/pandoc/releases/download/.*\.msi')
-zipUrlPartial=$(curl -L $url | grep -o '/jgm/pandoc/releases/download/.*\.zip')
-tarUrlPartial=$(curl -L $url | grep -o '/jgm/pandoc/releases/download/.*\.tar\.gz')
+zipUrlPartial=$(curl -L $url | grep -o '/jgm/pandoc/archive/.*\.zip')
+tarUrlPartial=$(curl -L $url | grep -o '/jgm/pandoc/archive/.*\.tar\.gz')
 # debug msg
 if [[ $DEBUG == "true" ]]; then
   echo $debUrlPartial
