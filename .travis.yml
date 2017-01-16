@@ -9,7 +9,7 @@ install:
   - wget http://launchpadlibrarian.net/250277651/libgcab-1.0-0_0.7-1_amd64.deb &&
     sudo dpkg -i libgcab-1.0-0_0.7-1_amd64.deb
   - wget http://launchpadlibrarian.net/228973209/libmsi0_0.95-1_amd64.deb &&
-    sudo dkpg -i libmsi0_0.95-1_amd64.deb
+    sudo dpkg -i libmsi0_0.95-1_amd64.deb
   - wget http://launchpadlibrarian.net/228973210/msitools_0.95-1_amd64.deb &&
     sudo dpkg -i msitools_0.95-1_amd64.deb
 before_script:
