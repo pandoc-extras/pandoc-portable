@@ -14,9 +14,12 @@ after_success:
   - ls -l
 deploy:
   provider: releases
-  api_key: "$GH_TOKEN"
+  api_key: "$GH_TOKEN_SECURE"
   file_glob: true
   file: "dist/*"
   skip_cleanup: true
   on:
     tags: true
+env:
+  global:
+    secure: Of0/8nwlXrsCbFcTibnYD/xtOPgSFHljyNuxy5Pz4Naz2CVB/4y/gUKdjrncIOAOwJPEB3YgaWSk+ZFd+GiU7fYF2bu+46bU4qyfGq/W3wRQ7AYpLVBk8osWZ4NFxS8lVYcfxW4++IJRGAsKCnlhTM0iXXaMqUbhCQ9eMogbYNbPGFHMtcFxKLSXQsAHO0jF8iit5WIHyTHb/wUHetLEKpncbPEloE6475QthhL9he3wNGN6nFmjFk2RY73G4MZRN4xffQGfAGb/kfKUPT/ky9QmIakMREVDfiFv5smZOKUmzA7a5Ao05APfeTxdMeZSajuilFB9eviiV84EA5HJjIEqtwWMJlktJjS8o1sgB2clJ6/gpQREFUJVjnLiq6/Z4Z3OR3SMy/zjku0Cscx04ruwXvY9ecBUDV3iWfv5oG+jh3suk3YPHzAeRIIeD2E301q5FHQnKldimVSw7K1pKvubj22UUbPb1NReg1zVMrLsWYHD02sGjFWh3SlQMB+XNSnhB2Ch+djPpGSqZ5Ab1jgbhqGxHg330evR5t9yxEU+uYBYAlk6dXZdkmJzUfVoW0oFw6NVk/JS4xar6wGhlj1vgS8gSpRBPvwU1zc82O2iumiOBTiH98XFkaFYbZy5qvkJsc/6mVfI4yoTICZU1loA5pFa6JnN2dak06kREMs=
