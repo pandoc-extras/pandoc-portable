@@ -10,4 +10,4 @@ The versions of the script and travis setup in this repository will be in this `
 
 # License
 
-The original license from pandoc is copied here, which is in GPLv2.
+The original license from pandoc is copied here, which is in GPLv2+.
