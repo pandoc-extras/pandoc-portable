@@ -104,8 +104,8 @@ if [[ ! -z "$zipUrlPartial" ]]; then
   ZIP=${zipUrl##*/}
   # download
   wget $zipUrl
-  # to dist/
-  mv $ZIP dist/
+	# rename & to dist
+	mv $ZIP dist/source-code-$ZIP
 fi
 ### .tar.gz
 if [[ ! -z "$tarUrlPartial" ]]; then
@@ -115,5 +115,5 @@ if [[ ! -z "$tarUrlPartial" ]]; then
   # download
   wget $tarUrl
   # to dist/
-  mv $TAR dist/
+  mv $TAR dist/source-code-$TAR
 fi
