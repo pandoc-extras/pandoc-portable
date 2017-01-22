@@ -105,7 +105,7 @@ if [[ ! -z "$zipUrlPartial" ]]; then
   # download
   wget $zipUrl
 	# rename & to dist/
-	mv $ZIP dist/pandoc-$ZIP-source-code
+	mv $ZIP dist/pandoc-source-code-$ZIP
 fi
 ### .tar.gz
 if [[ ! -z "$tarUrlPartial" ]]; then
@@ -115,5 +115,5 @@ if [[ ! -z "$tarUrlPartial" ]]; then
   # download
   wget $tarUrl
 	# rename & to dist/
-  mv $TAR dist/pandoc-$TAR-source-code
+  mv $TAR dist/pandoc-source-code-$TAR
 fi
