@@ -9,29 +9,35 @@
 
 # debug msg
 if [[ "$DEBUG" == "true" ]]; then
-  echo "$VERSION"
+  echo "Processing pandoc version $VERSION"
 fi
 
 # url to pandoc version
 url="https://github.com/jgm/pandoc/releases/tag/$VERSION"
 # debug msg
 if [[ "$DEBUG" == "true" ]]; then
-  echo "$url"
+  echo "Obtaining binaries from $url"
 fi
 
 # get url to pandoc binaries
-debUrlPartial=$(curl -L "$url" | grep -o '/jgm/pandoc/releases/download/.*\.deb')
-pkgUrlPartial=$(curl -L "$url" | grep -o '/jgm/pandoc/releases/download/.*\.pkg')
-msiUrlPartial=$(curl -L "$url" | grep -o '/jgm/pandoc/releases/download/.*\.msi')
-zipUrlPartial=$(curl -L "$url" | grep -o '/jgm/pandoc/archive/.*\.zip')
-tarUrlPartial=$(curl -L "$url" | grep -o '/jgm/pandoc/archive/.*\.tar\.gz')
+html=$(curl -L --fail "$url")
+if [[ $? != 0 ]]; then
+  echo "Cannot retrieve $url. Check if version $VERSION is valid."
+  exit 1
+fi
+
+debUrlPartial=$(printf '%s' "$html" | grep -o '/jgm/pandoc/releases/download/.*\.deb')
+pkgUrlPartial=$(printf '%s' "$html" | grep -o '/jgm/pandoc/releases/download/.*\.pkg')
+msiUrlPartial=$(printf '%s' "$html" | grep -o '/jgm/pandoc/releases/download/.*\.msi')
+zipUrlPartial=$(printf '%s' "$html" | grep -o '/jgm/pandoc/archive/.*\.zip')
+tarUrlPartial=$(printf '%s' "$html" | grep -o '/jgm/pandoc/archive/.*\.tar\.gz')
 # debug msg
 if [[ "$DEBUG" == "true" ]]; then
-  echo "$debUrlPartial"
-  echo "$pkgUrlPartial"
-  echo "$msiUrlPartial"
-  echo "$zipUrlPartial"
-  echo "$tarUrlPartial"
+  echo "URL to deb: $debUrlPartial"
+  echo "URL to pkg: $pkgUrlPartial"
+  echo "URL to msi: $msiUrlPartial"
+  echo "URL to source code in zip: $zipUrlPartial"
+  echo "URL to source code in tar.gz: $tarUrlPartial"
 fi
 
 # prepare dist folder
@@ -56,6 +62,8 @@ if [[ ! -z "$debUrlPartial" ]]; then
   mv "$DEB" dist/
   mv "$debZip" dist/
   mv "$debWoExt.tar.gz" dist/
+else
+  echo "deb package not found"
 fi
 ## macOS
 if [[ ! -z "$pkgUrlPartial" ]]; then
@@ -78,6 +86,8 @@ if [[ ! -z "$pkgUrlPartial" ]]; then
   # to dist/
   mv "$PKG" dist/
   mv "$pkgZip" dist/
+else
+  echo "pkg package not found"
 fi
 ## Windows
 if [[ ! -z "$msiUrlPartial" ]]; then
@@ -95,6 +105,8 @@ if [[ ! -z "$msiUrlPartial" ]]; then
   # to dist/
   mv "$MSI" dist/
   mv "$msiZip" dist/
+else
+  echo "msi package not found"
 fi
 ## Source Code
 ### .zip
@@ -104,8 +116,10 @@ if [[ ! -z "$zipUrlPartial" ]]; then
   ZIP="${zipUrl##*/}"
   # download
   wget "$zipUrl"
-	# rename & to dist/
-	mv "$ZIP" "dist/pandoc-source-code-$ZIP"
+  # rename & to dist/
+  mv "$ZIP" "dist/pandoc-source-code-$ZIP"
+else
+  echo "source code not found in zip"
 fi
 ### .tar.gz
 if [[ ! -z "$tarUrlPartial" ]]; then
@@ -114,6 +128,8 @@ if [[ ! -z "$tarUrlPartial" ]]; then
   TAR="${tarUrl##*/}"
   # download
   wget "$tarUrl"
-	# rename & to dist/
+  # rename & to dist/
   mv "$TAR" "dist/pandoc-source-code-$TAR"
+else
+  echo "source code not found in tag.gz"
 fi
